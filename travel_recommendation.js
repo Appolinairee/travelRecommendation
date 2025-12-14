@@ -18,10 +18,10 @@ async function fetchRecommendations() {
     }
 }
 
-// Function to show different sections
+// Function to show different sections (only for home and results now)
 function showSection(sectionName) {
     // Hide all sections
-    const sections = ['home', 'about', 'contact', 'results'];
+    const sections = ['home', 'results'];
     sections.forEach(section => {
         const element = document.getElementById(section);
         if (element) {
