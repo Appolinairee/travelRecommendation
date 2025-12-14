@@ -163,15 +163,35 @@ function createRecommendationCard(item, index) {
         ? item.imageUrl 
         : `https://via.placeholder.com/300x200/4CAF50/ffffff?text=${encodeURIComponent(item.name.split(',')[0])}`;
     
-    card.innerHTML = `
-        <img src="${imageUrl}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/300x200/4CAF50/ffffff?text=No+Image'">
-        <div class="card-content">
-            <h3>${item.name}</h3>
-            <p>${item.description}</p>
-            <button class="visit-btn" onclick="visitDestination('${item.name}')">Visit</button>
-            <div id="timeZone-${index}" style="margin-top: 10px; font-size: 0.9em; color: #666;"></div>
-        </div>
-    `;
+    // Check if background image is available and add appropriate class
+    if (item.backgroundImage) {
+        card.classList.add('with-background');
+        card.style.setProperty('--bg-image', `url('${item.backgroundImage}')`);
+        card.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('${item.backgroundImage}')`;
+        card.style.backgroundSize = 'cover';
+        card.style.backgroundPosition = 'center';
+        
+        // For cards with background, we don't need the separate image
+        card.innerHTML = `
+            <div class="card-content">
+                <h3>${item.name}</h3>
+                <p>${item.description}</p>
+                <button class="visit-btn" onclick="visitDestination('${item.name}')">Visit</button>
+                <div id="timeZone-${index}" style="margin-top: 10px; font-size: 0.9em; color: #666;"></div>
+            </div>
+        `;
+    } else {
+        // Traditional card with image at top
+        card.innerHTML = `
+            <img src="${imageUrl}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/300x200/4CAF50/ffffff?text=No+Image'">
+            <div class="card-content">
+                <h3>${item.name}</h3>
+                <p>${item.description}</p>
+                <button class="visit-btn" onclick="visitDestination('${item.name}')">Visit</button>
+                <div id="timeZone-${index}" style="margin-top: 10px; font-size: 0.9em; color: #666;"></div>
+            </div>
+        `;
+    }
     
     // Add time zone information if it's a country/city
     if (item.name.includes(',')) {
