@@ -4,56 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TravelBloom - About Us</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            background-color: #f4f4f4;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/styles.css">
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
+
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="logo">TravelBloom</div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html" class="active">About Us</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
+    <nav class="navbar" role="navigation" aria-label="Main navigation">
+        <!-- Logo -->
+        <a href="index.html" class="navbar__logo" aria-label="TravelBloom Home">
+            <i data-feather="send" class="navbar__logo-icon" aria-hidden="true"></i>
+            <span>TravelBloom</span>
+        </a>
+
+        <!-- Navigation Links -->
+        <ul class="navbar__nav">
+            <li class="navbar__nav-item"><a href="index.html" class="navbar__nav-link">Home</a></li>
+            <li class="navbar__nav-item"><a href="about.html" class="navbar__nav-link navbar__nav-link--active" aria-current="page">About Us</a></li>
+            <li class="navbar__nav-item"><a href="contact.html" class="navbar__nav-link">Contact Us</a></li>
         </ul>
+
+        <!-- Search -->
+        <div class="navbar__search">
+            <div class="navbar__search-container">
+                <input type="search" id="searchInput" class="navbar__search-input" placeholder="Enter a destination or keyword" aria-label="Search destinations">
+                <button type="button" class="navbar__search-icon-btn" onclick="searchRecommendations()" aria-label="Search"><i data-feather="search"></i></button>
+                <button type="button" class="navbar__btn navbar__btn--search" onclick="searchRecommendations()">Search</button>
+                <button type="button" class="navbar__btn navbar__btn--clear" onclick="clearResults()">Clear</button>
+            </div>
+        </div>
     </nav>
 
-    <!-- About Us Section -->
+    <!-- About Us Section (styled like hero) -->
     <section class="about-section">
-        <div class="about-content">
-            <h1>ABOUT US</h1>
-            <div class="about-text">
-                <p>Welcome to TravelBloom! We are a team of passionate individuals dedicated to providing excellent travel experiences to our customers. Our mission is to <strong>provide the best experience</strong> for people traveling to different destinations around the world.</p>
-                <p>Our values include integrity, innovation, customer satisfaction, and teamwork. We believe in <strong>putting our customers first</strong> and <strong>working together</strong> to achieve our goals of creating unforgettable travel memories.</p>
-                <p>With years of experience in the travel industry, we curate personalized recommendations that match your preferences and budget. Whether you're looking for serene beaches, historic temples, or vibrant cities, we have the perfect destination for you.</p>
-                <p>Feel free to explore our website to learn more about what we offer!</p>
+        <div class="about-inner">
+            <!-- Social rail (left vertical icons) -->
+            <div class="social-rail" aria-label="Social links">
+                <a href="#" class="social-rail__link" aria-label="Twitter"><i data-feather="twitter"></i></a>
+                <a href="#" class="social-rail__link" aria-label="Facebook"><i data-feather="facebook"></i></a>
+                <a href="#" class="social-rail__link" aria-label="Instagram"><i data-feather="instagram"></i></a>
+                <a href="#" class="social-rail__link" aria-label="YouTube"><i data-feather="youtube"></i></a>
             </div>
-            
-            <div class="team-section">
-                <h2>Our Team</h2>
-                <div class="team-grid">
-                    <div class="team-member">
-                        <h3>John Doe</h3>
-                        <p>John is responsible for strategic planning and overall company direction. With over 15 years in the travel industry, he ensures our services meet the highest standards.</p>
-                        <div class="team-role">CEO</div>
-                    </div>
-                    <div class="team-member">
-                        <h3>Celina Thomas</h3>
-                        <p>Celina Thomas is responsible for leading our development team and ensuring seamless user experiences. She brings innovation to every project we undertake.</p>
-                        <div class="team-role">Team Lead</div>
-                    </div>
-                    <div class="team-member">
-                        <h3>Mike Tysen</h3>
-                        <p>Mike Tysen is responsible for managing our delivery processes and ensuring customer satisfaction. He oversees all travel arrangements and customer support.</p>
-                        <div class="team-role">Delivery Head</div>
+
+            <div class="about-content">
+                <h1>ABOUT US</h1>
+                <div class="about-text about-text--boxed">
+                    <p>Welcome to Our Company! We are a team of passionate individuals dedicated to providing excellent services/products to our customers. Our mission is to <strong>provide the best experience</strong> for people traveling to different destinations around the world.</p>
+                    <p>Our values include integrity, innovation, customer satisfaction, and teamwork. We believe in <strong>putting our customers first</strong> and <strong>working together</strong> to achieve our goals.</p>
+                    <p>Feel free to explore our website to learn more about what we offer!</p>
+                </div>
+
+                <!-- Team area: left stacked title + right cards -->
+                <div class="team-section">
+                    <div class="team-grid">
+                        <div class="team-title">
+                            <span>Our</span>
+                            <span>Team</span>
+                        </div>
+
+                        <div class="team-cards">
+                            <div class="team-member card">
+                                <h3>John Doe</h3>
+                                <p>John is responsible for strategic planning and overall company direction. With over 15 years in the travel industry, he ensures our services meet the highest standards.</p>
+                                <div class="team-role">CEO</div>
+                            </div>
+                            <div class="team-member card">
+                                <h3>Celina Thomas</h3>
+                                <p>Celina Thomas is responsible for leading our development team and ensuring seamless user experiences. She brings innovation to every project we undertake.</p>
+                                <div class="team-role">Team Lead</div>
+                            </div>
+                            <div class="team-member card">
+                                <h3>Mike Tysen</h3>
+                                <p>Mike Tysen is responsible for managing our delivery processes and ensuring customer satisfaction. He oversees all travel arrangements and customer support.</p>
+                                <div class="team-role">Delivery Head</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    <script src="assets/navigation.js"></script>
+    <script>if(typeof feather!=='undefined')feather.replace();</script>
 </body>
 </html>

@@ -1,56 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TravelBloom - Your Dream Destination</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="logo">TravelBloom</div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About Us</a></li>
-            <li><a href="contact.html">Contact Us</a></li>
-        </ul>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Enter a destination or keyword">
-            <button class="search-btn" onclick="searchRecommendations()">Search</button>
-            <button class="clear-btn" onclick="clearResults()">Clear</button>
-        </div>
-    </nav>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TravelBloom - Your Dream Destination</title>
+        <link rel="stylesheet" href="assets/styles.css">
+        <!-- Feather Icons -->
+        <script src="https://unpkg.com/feather-icons"></script>
+    </head>
+    <body>
+        <!-- Navigation Bar -->
+        <nav class="navbar" role="navigation" aria-label="Main navigation">
+            <!-- Logo -->
+            <a href="index.html" class="navbar__logo" aria-label="TravelBloom Home">
+                <i data-feather="send" class="navbar__logo-icon" aria-hidden="true"></i>
+                <span>TravelBloom</span>
+            </a>
 
-    <!-- Home Section -->
-    <section id="home" class="home-section">
-        <div class="home-content">
-            <h1>EXPLORE<br>DREAM<br>DESTINATION</h1>
-            <p>It encourages exploration of unfamiliar territories, embracing diverse cultures and landscapes, while pursuing the desired destination that captivates the heart and ignites a sense of wonder.</p>
-            <a href="contact.html" class="cta-button">BOOK NOW</a>
-        </div>
-        
-        <!-- Social Media Icons -->
-        <div class="social-media">
-            <a href="#" class="social-icon">🐦</a>
-            <a href="#" class="social-icon">📘</a>
-            <a href="#" class="social-icon">📸</a>
-            <a href="#" class="social-icon">▶️</a>
-        </div>
-    </section>
+            <!-- Navigation Links -->
+            <ul class="navbar__nav">
+                <li class="navbar__nav-item">
+                    <a href="index.html" class="navbar__nav-link navbar__nav-link--active" aria-current="page">Home</a>
+                </li>
+                <li class="navbar__nav-item">
+                    <a href="about.html" class="navbar__nav-link">About Us</a>
+                </li>
+                <li class="navbar__nav-item">
+                    <a href="contact.html" class="navbar__nav-link">Contact Us</a>
+                </li>
+            </ul>
 
-
-
-    <!-- Results Section -->
-    <section id="results" class="results-section hidden">
-        <div class="results-container">
-            <h2>Recommended Destinations</h2>
-            <div id="recommendationsContainer" class="results-grid">
-                <!-- Results will be populated here by JavaScript -->
+            <!-- Search Form -->
+            <div class="navbar__search">
+                <div class="navbar__search-container">
+                    <input type="search" id="searchInput" class="navbar__search-input" placeholder="Enter a destination or keyword" aria-label="Search destinations">
+                    <button type="button" class="navbar__search-icon-btn" onclick="searchRecommendations()" aria-label="Search"><i data-feather="search"></i></button>
+                    <button type="button" class="navbar__btn navbar__btn--search" onclick="searchRecommendations()">Search</button>
+                    <button type="button" class="navbar__btn navbar__btn--clear" onclick="clearResults()">Clear</button>
+                </div>
             </div>
-        </div>
-    </section>
+        </nav>
 
-    <script src="travel_recommendation.js"></script>
-</body>
+        <!-- Home Section -->
+        <section id="home" class="home-section">
+            <div class="home-content">
+                <h1>EXPLORE<br>DREAM<br>DESTINATION</h1>
+                <div class="desc-box">
+                    <p>It encourages exploration of unfamiliar territories,
+                        embracing diverse cultures and landscapes, while
+                        pursuing the desired destination that captivates the
+                        heart and ignites a sense of wonder.</p>
+                </div>
+                <a href="contact.html" class="cta-button">BOOK NOW</a>
+            </div>
+
+            <!-- Social media rail: vertical line + stacked icons -->
+            <div class="social-rail" aria-label="Social links">
+                <a href="#" class="social-rail__link" aria-label="Twitter">
+                    <i data-feather="twitter"></i>
+                </a>
+                <a href="#" class="social-rail__link" aria-label="Facebook">
+                    <i data-feather="facebook"></i>
+                </a>
+                <a href="#" class="social-rail__link" aria-label="Instagram">
+                    <i data-feather="instagram"></i>
+                </a>
+                <a href="#" class="social-rail__link" aria-label="YouTube">
+                    <i data-feather="youtube"></i>
+                </a>
+            </div>
+
+            <!-- Results Section (moved onto hero background) -->
+            <section id="results" class="results-section">
+                <div class="results-container">
+                    <h2>Recommended Destinations</h2>
+                    <div id="recommendationsContainer" class="results-grid">
+                        <!-- Results will be populated here by JavaScript -->
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <script src="assets/navigation.js"></script>
+        <script src="travel_recommendation.js"></script>
+        <script>
+        // Ensure feather icons are replaced if any left
+        if (typeof feather !== 'undefined') {
+            feather.replace();
+        }
+        </script>
+    </body>
 </html>

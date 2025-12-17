@@ -1,0 +1,24 @@
+<nav class="navbar" role="navigation" aria-label="Main navigation"></nav>
+  <!-- Logo -->
+  <a href="index.html" class="navbar__logo" aria-label="TravelBloom Home">
+    <i data-feather="send" class="navbar__logo-icon" aria-hidden="true"></i>
+    <span>TravelBloom</span>
+  </a>
+
+  <!-- Navigation Links -->
+  <ul class="navbar__nav">
+    <li class="navbar__nav-item"><a href="index.html" class="navbar__nav-link">Home</a></li>
+    <li class="navbar__nav-item"><a href="about.html" class="navbar__nav-link">About Us</a></li>
+    <li class="navbar__nav-item"><a href="contact.html" class="navbar__nav-link">Contact Us</a></li>
+  </ul>
+
+  <!-- Search (kept inline in navbar fragment) -->
+  <div class="navbar__search">
+    <div class="navbar__search-container">
+      <input type="search" id="searchInput" class="navbar__search-input" placeholder="Enter a destination or keyword" aria-label="Search destinations">
+      <button type="button" class="navbar__search-icon-btn" onclick="searchRecommendations()" aria-label="Search"><i data-feather="search"></i></button>
+      <button type="button" class="navbar__btn navbar__btn--search" onclick="searchRecommendations()">Search</button>
+      <button type="button" class="navbar__btn navbar__btn--clear" onclick="clearResults()">Clear</button>
+    </div>
+  </div>
+</nav>
