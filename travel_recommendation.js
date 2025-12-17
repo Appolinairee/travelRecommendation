@@ -5,6 +5,8 @@ let travelData = null;
 // Fetch data from JSON file when page loads
 document.addEventListener('DOMContentLoaded', function() {
     fetchRecommendations();
+    // Afficher les recommandations par défaut
+    displayDefaultRecommendations();
 });
 
 // Function to fetch travel recommendations from JSON
@@ -13,9 +15,54 @@ async function fetchRecommendations() {
         const response = await fetch('./travel_recommendation_api.json');
         travelData = await response.json();
         console.log("Travel data loaded successfully:", travelData);
+        // Une fois les données chargées, afficher les recommandations
+        displayDefaultRecommendations();
     } catch (error) {
         console.error('Error fetching travel data:', error);
     }
+}
+
+// Function to display default recommendations on page load
+function displayDefaultRecommendations() {
+    if (!travelData) return;
+    
+    const resultsSection = document.getElementById('results');
+    const resultsTitle = document.getElementById('resultsTitle');
+    
+    // Afficher la section des résultats
+    if (resultsSection) {
+        resultsSection.style.display = 'block';
+    }
+    
+    // Remettre le titre par défaut
+    if (resultsTitle) {
+        resultsTitle.textContent = 'Recommandations';
+    }
+    
+    // Collecter toutes les recommandations (villes, temples, plages)
+    let allRecommendations = [];
+    
+    // Ajouter les villes des pays
+    if (travelData.countries) {
+        travelData.countries.forEach(country => {
+            if (country.cities) {
+                allRecommendations = allRecommendations.concat(country.cities);
+            }
+        });
+    }
+    
+    // Ajouter les temples
+    if (travelData.temples) {
+        allRecommendations = allRecommendations.concat(travelData.temples);
+    }
+    
+    // Ajouter les plages
+    if (travelData.beaches) {
+        allRecommendations = allRecommendations.concat(travelData.beaches);
+    }
+    
+    // Afficher toutes les recommandations
+    displayResults(allRecommendations, null);
 }
 
 // Function to show different sections (only for home and results now)
@@ -47,7 +94,8 @@ function searchRecommendations() {
     const searchTerm = searchInput.value.trim().toLowerCase();
     
     if (!searchTerm) {
-        alert('Please enter a search term');
+        // Si pas de texte, afficher les recommandations par défaut
+        displayDefaultRecommendations();
         return;
     }
     
@@ -131,13 +179,23 @@ function searchSpecificDestination(searchTerm) {
 function displayResults(results, searchTerm) {
     const recommendationsContainer = document.getElementById('recommendationsContainer');
     const resultsSection = document.getElementById('results');
+    const resultsTitle = document.getElementById('resultsTitle');
     
     // Clear previous results
     recommendationsContainer.innerHTML = '';
     
+    // Mettre à jour le titre avec le texte de recherche ou "Recommandations" par défaut
+    if (resultsTitle) {
+        if (searchTerm) {
+            resultsTitle.textContent = searchTerm;
+        } else {
+            resultsTitle.textContent = 'Recommandations';
+        }
+    }
+    
     if (results.length === 0) {
         recommendationsContainer.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 2rem;">
+            <div style="text-align: center; padding: 2rem; color: #fff;">
                 <h3>No recommendations found for "${searchTerm}"</h3>
                 <p>Try searching for "beach", "temple", "country", or specific destination names.</p>
             </div>
@@ -149,8 +207,10 @@ function displayResults(results, searchTerm) {
         });
     }
     
-    // Show results section and hide others
-    showSection('results');
+    // Show results section
+    if (resultsSection) {
+        resultsSection.style.display = 'block';
+    }
 }
 
 // Function to create recommendation card
@@ -163,40 +223,15 @@ function createRecommendationCard(item, index) {
         ? item.imageUrl 
         : `https://via.placeholder.com/300x200/4CAF50/ffffff?text=${encodeURIComponent(item.name.split(',')[0])}`;
     
-    // Check if background image is available and add appropriate class
-    if (item.backgroundImage) {
-        card.classList.add('with-background');
-        card.style.setProperty('--bg-image', `url('${item.backgroundImage}')`);
-        card.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('${item.backgroundImage}')`;
-        card.style.backgroundSize = 'cover';
-        card.style.backgroundPosition = 'center';
-        
-        // For cards with background, we don't need the separate image
-        card.innerHTML = `
-            <div class="card-content">
-                <h3>${item.name}</h3>
-                <p>${item.description}</p>
-                <button class="visit-btn" onclick="visitDestination('${item.name}')">Visit</button>
-                <div id="timeZone-${index}" style="margin-top: 10px; font-size: 0.9em; color: #666;"></div>
-            </div>
-        `;
-    } else {
-        // Traditional card with image at top
-        card.innerHTML = `
-            <img src="${imageUrl}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/300x200/4CAF50/ffffff?text=No+Image'">
-            <div class="card-content">
-                <h3>${item.name}</h3>
-                <p>${item.description}</p>
-                <button class="visit-btn" onclick="visitDestination('${item.name}')">Visit</button>
-                <div id="timeZone-${index}" style="margin-top: 10px; font-size: 0.9em; color: #666;"></div>
-            </div>
-        `;
-    }
-    
-    // Add time zone information if it's a country/city
-    if (item.name.includes(',')) {
-        displayCountryTime(item.name, index);
-    }
+    // Traditional card with image at top
+    card.innerHTML = `
+        <img src="${imageUrl}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/300x200/4CAF50/ffffff?text=No+Image'">
+        <div class="card-content">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <button class="visit-btn">View</button>
+        </div>
+    `;
     
     return card;
 }
@@ -209,13 +244,11 @@ function visitDestination(destinationName) {
 // Function to clear search results
 function clearResults() {
     const searchInput = document.getElementById('searchInput');
-    const recommendationsContainer = document.getElementById('recommendationsContainer');
     
     searchInput.value = '';
-    recommendationsContainer.innerHTML = '';
     
-    // Hide results section and show home
-    showSection('home');
+    // Réafficher les recommandations par défaut
+    displayDefaultRecommendations();
 }
 
 // Function to display country time (Task 10 - Optional)
